@@ -5,6 +5,10 @@ import { FaBed } from "react-icons/fa";
 import { BiArea } from "react-icons/bi";
 import { FaBath } from "react-icons/fa6";
 import { Link } from "react-router-dom";
+import { useAddToCartMutation } from "../store/cartApi";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 const villas = [
   {
     id: 1,
@@ -124,7 +128,43 @@ const villas = [
     dailyRent: "180",
   },
 ];
+
 const TopVillas = () => {
+  const [addToCart] = useAddToCartMutation();
+
+  const handleAddToCart = async (villa) => {
+    try {
+      const cartItem = {
+        userId: "user123",
+        propertyId: villa.id,
+        propertyName: villa.name,
+        price: parseFloat(villa.dailyRent),
+        duration: 1,
+        image: villa.image,
+        location: villa.location
+      };
+      await addToCart(cartItem).unwrap();
+      toast.success('Added to cart successfully!', {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+      });
+    } catch (error) {
+      console.error('Error adding to cart:', error);
+      toast.error('Failed to add to cart. Please try again.', {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+      });
+    }
+  };
+
   return (
     <section id="topVillas">
       <h1>TOP PICK VILLAS</h1>
@@ -137,7 +177,8 @@ const TopVillas = () => {
       <div className="villasContainer">
         {villas.slice(0,3).map((element) => {
           return (
-              <Link to={`/villa/${element.id}`} className="card" key={element.id}>
+            <div className="card" key={element.id}>
+              <Link to={`/villa/${element.id}`}>
                 <img src={element.image} alt={element.name} />
                 <div className="location_text">
                   <span>{element.location}</span>
@@ -173,9 +214,27 @@ const TopVillas = () => {
                   From <span>Rs.{element.dailyRent} / Day </span>
                 </div>
               </Link>
+              <button 
+                className="add-to-cart-btn"
+                onClick={() => handleAddToCart(element)}
+                style={{
+                  width: '100%',
+                  padding: '10px',
+                  backgroundColor: '#007bff',
+                  color: 'white',
+                  border: 'none',
+                  borderRadius: '4px',
+                  cursor: 'pointer',
+                  marginTop: '10px'
+                }}
+              >
+                Add to Cart
+              </button>
+            </div>
           );
         })}
       </div>
+      <ToastContainer />
     </section>
   );
 };

@@ -6,7 +6,7 @@ const Host = () => {
     <>
       <section id='host'>
           <div className="container">
-            <p>BECOME A H</p>
+            <p>BECOME A HOST</p>
             <h3>Become a host</h3>
             <p>Lorem ipsum dol sit, amet consectetur adipisicing elit. Quasi nam facilis odit officiis quod fuga, aut expedita nostrum perferendis molestiae.</p>
             <WalletConnect></WalletConnect>

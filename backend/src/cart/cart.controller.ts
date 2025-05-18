@@ -1,6 +1,14 @@
-import { Controller, Get, Post, Body, Param, Delete, Put, UseGuards } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Param,
+  Delete,
+  Put,
+} from '@nestjs/common';
 import { CartService } from './cart.service';
-import { Cart } from './cart.entity';
+import { Cart } from './cart.schema';
 
 @Controller('cart')
 export class CartController {
@@ -17,20 +25,20 @@ export class CartController {
   }
 
   @Get(':id')
-  async findOne(@Param('id') id: number): Promise<Cart> {
+  async findOne(@Param('id') id: string): Promise<Cart> {
     return await this.cartService.findOne(id);
   }
 
   @Put(':id')
   async update(
-    @Param('id') id: number,
+    @Param('id') id: string,
     @Body() cartData: Partial<Cart>,
   ): Promise<Cart> {
     return await this.cartService.update(id, cartData);
   }
 
   @Delete(':id')
-  async remove(@Param('id') id: number): Promise<void> {
+  async remove(@Param('id') id: string): Promise<void> {
     await this.cartService.remove(id);
   }
 
@@ -38,4 +46,4 @@ export class CartController {
   async clearUserCart(@Param('userId') userId: string): Promise<void> {
     await this.cartService.clearUserCart(userId);
   }
-} 
+}

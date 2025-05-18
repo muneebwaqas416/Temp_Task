@@ -10,23 +10,27 @@ import Navbar from './components/Navbar/Navbar';
 import Footer from './components/Footer/Footer';
 import { ThemeProvider } from './context/ThemeContext';
 import './App.css'
+import { Provider } from 'react-redux';
+import { store } from './store/store';
 
 const App = () => {
   return (
-    <ThemeProvider>
-      <Router>
-        <Navbar/>
-        <Routes>
-          <Route path='/' element={<Home/>}/>
-          <Route path='/aboutus' element={<AboutUs/>}/>
-          <Route path='/contact' element={<Contact/>}/>
-          <Route path='/termsandconditions' element={<TermsAndConditions/>}/>
-          <Route path='/villas' element={<Villas/>}/>
-          <Route path='/villa/:id' element={<SingleVilla/>}/>
-        </Routes>
-        <Footer/>
-      </Router>
-    </ThemeProvider>
+    <Provider store={store}>
+      <ThemeProvider>
+        <Router>
+          <Navbar/>
+          <Routes>
+            <Route path='/' element={<Home/>}/>
+            <Route path='/aboutus' element={<AboutUs/>}/>
+            <Route path='/contact' element={<Contact/>}/>
+            <Route path='/termsandconditions' element={<TermsAndConditions/>}/>
+            <Route path='/villas' element={<Villas/>}/>
+            <Route path='/villa/:id' element={<SingleVilla/>}/>
+          </Routes>
+          <Footer/>          
+        </Router>
+      </ThemeProvider>
+    </Provider>
   )
 }
 
