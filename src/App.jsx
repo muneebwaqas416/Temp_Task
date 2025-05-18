@@ -8,11 +8,12 @@ import SingleVilla from './components/Villa/SingleVilla';
 import TermsAndConditions from './components/TermsAndConditions/TermsAndConditions';
 import Navbar from './components/Navbar/Navbar';
 import Footer from './components/Footer/Footer';
+import { ThemeProvider } from './context/ThemeContext';
 import './App.css'
 
 const App = () => {
   return (
-    <>
+    <ThemeProvider>
       <Router>
         <Navbar/>
         <Routes>
@@ -25,7 +26,7 @@ const App = () => {
         </Routes>
         <Footer/>
       </Router>
-    </>
+    </ThemeProvider>
   )
 }
 
